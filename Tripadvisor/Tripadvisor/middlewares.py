@@ -7,6 +7,8 @@
 
 from scrapy import signals
 
+from Tripadvisor.spiders.fake_useragent.fake import UserAgent
+
 
 class TripadvisorSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -69,17 +71,22 @@ class TripadvisorDownloaderMiddleware(object):
         return s
 
     def process_request(self, request, spider):
-        # Called for each request that goes through the downloader
-        # middleware.
-
-        # Must either:
-        # - return None: continue processing this request
-        # - or return a Response object
-        # - or return a Request object
-        # - or raise IgnoreRequest: process_exception() methods of
-        #   installed downloader middleware will be called
+        ua = UserAgent()
+        request.headers.setdefault(b'User-Agent', ua.random)
+        # print('访问的url', request.url)
+        # if request.url.startswith('http:'):
+        #     proxy_ip = requests.get(
+        #         'http://api3.xiguadaili.com/ip/?tid=557359636413964&num=1&protocol=http&category=2').text
+        #     if proxy_ip:
+        #         request.meta['proxy'] = 'http://' + proxy_ip
+        #
+        # if request.url.startswith('https:'):
+        #     proxy_ip = requests.get(
+        #         'https://api3.xiguadaili.com/ip/?tid=557359636413964&num=1&protocol=http&category=2').text
+        #     if proxy_ip:
+        #         request.meta['proxy'] = 'https://' + proxy_ip
+        # print('代理ip', request.meta['proxy'])
         return None
-
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
 
