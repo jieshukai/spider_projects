@@ -17,11 +17,13 @@ class ZhujiajiaoSpider(scrapy.Spider):
     name = 'zhujiajiao_en'
     allowed_domains = ['tripadvisor.cn', 'ccm.ddcdn.com']
     start_urls = [
-        'https://www.tripadvisor.cn/Attraction_Review-g308272-d1805650-Reviews-Zhujiajiao_Ancient_Town-Shanghai.html',
+        # 'https://www.tripadvisor.cn/Attraction_Review-g308272-d1805650-Reviews-Zhujiajiao_Ancient_Town-Shanghai.html',
+        'https://www.tripadvisor.cn/Attraction_Review-g308272-d311595-Reviews-The_Bund_Wai_Tan-Shanghai.html',
     ]
-    page_url = 'https://www.tripadvisor.cn/Attraction_Review-g308272-d1805650-Reviews-or{}-Zhujiajiao_Ancient_Town-Shanghai.html'
+    # page_url = 'https://www.tripadvisor.cn/Attraction_Review-g308272-d1805650-Reviews-or{}-Zhujiajiao_Ancient_Town-Shanghai.html'
+    page_url = 'https://www.tripadvisor.cn/Attraction_Review-g308272-d311595-Reviews-or{}-The_Bund_Wai_Tan-Shanghai.html'
     # 可选语种 en,zhCN,zhTW
-    language = 'en'
+    language = 'zhCN'
 
     def parse(self, response):
         print('1--开始爬虫', response.url)
@@ -59,17 +61,15 @@ class ZhujiajiaoSpider(scrapy.Spider):
                 # 环比
                 content = commit_p.xpath('./div[2]//div/div/p/text()')[0]
                 # image_url
-                if self.language == 'en':
-                    image_urls = commit_p.xpath(".//div[@class='inlinePhotosWrapper']//img/@src")
-                else:
-                    image_urls = commit_p.xpath("./div[2]//div[@class='inlinePhotosWrapper']//img/@data-lazyurl")
+                image_urls = commit_p.xpath(
+                    ".//div[@class='inlinePhotosWrapper']//img/@src | ./div[2]//div[@class='inlinePhotosWrapper']//img/@data-lazyurl")
                 item['username'] = username
                 item['user_loc'] = user_loc
                 item['bubble'] = bubble
                 item['add_time'] = add_time
                 item['title'] = title
                 item['content'] = content
-                item['image_urls'] = image_urls
+                item['image_urls'] = [i.replace('photo-l', 'photo-w') for i in image_urls]
                 item['language'] = self.language
                 yield item
             try:

@@ -6,16 +6,23 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
 import os
-
 import scrapy
 from scrapy.pipelines.images import ImagesPipeline
-
-from Tripadvisor.settings import IMAGES_STORE
+from Tripadvisor.start import section
 
 
 class TripadvisorPipeline(object):
+    """
+    属性 ： name，language
+    方法 ： open_spider: 创建 json文件
+            close_spider: 写入 item数据
+            process_item: 关闭文件
+    """
+    name = section.get('name')
+    language = section.get('language')
+
     def open_spider(self, spider):
-        self.file = open('./data/zhujiajiao_en.json', 'w', encoding='utf-8')
+        self.file = open('./data/json/{}_{}.json'.format(self.name, self.language), 'a+', encoding='utf-8')
         self.file.write('[\n')
         print('open spider ---------')
 
@@ -63,7 +70,7 @@ class TripadvisorImagePipeline(ImagesPipeline):
     def item_completed(self, results, item, info):
         if isinstance(item, dict) or self.images_result_field in item.fields:
             item[self.images_result_field] = [x for ok, x in results if ok]
-        item['image_paths'] = [os.path.join('images', x['path']) for ok, x in results if ok]
+        item['image_paths'] = [os.path.join('images_{}'.format(section.get('verbose_name')), x['path']) for ok, x in results if ok]
         return item
 
 

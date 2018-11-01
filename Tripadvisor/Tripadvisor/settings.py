@@ -11,6 +11,8 @@
 # 默认基本配置
 import os
 
+from Tripadvisor.start import section
+
 BOT_NAME = 'Tripadvisor'
 SPIDER_MODULES = ['Tripadvisor.spiders']
 NEWSPIDER_MODULE = 'Tripadvisor.spiders'
@@ -44,11 +46,14 @@ DOWNLOADER_MIDDLEWARES = {
 # 调试配置
 # LOG_FILE = 'log.log'
 LOG_LEVEL = 'DEBUG'
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = 2
 # IMAGES_THUMBS = {  #缩略小图和大图的尺寸设置
 #     'small':(50,50),
 #     'big':(270,270),
 # }
-IMAGES_STORE = os.path.join(os.path.dirname(os.path.realpath('__file__')), 'images')
+IMAGES_STORE = os.path.join(os.path.dirname(os.path.realpath('__file__')),
+                            'images_{}'.format(section.get('verbose_name')))
+CONCURRENT_REQUESTS = 32
+
 if __name__ == '__main__':
     print(IMAGES_STORE)

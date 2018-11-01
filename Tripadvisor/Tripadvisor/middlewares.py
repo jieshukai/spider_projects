@@ -7,7 +7,7 @@
 
 from scrapy import signals
 
-from Tripadvisor.spiders.fake_useragent.fake import UserAgent
+from fake_useragent import UserAgent
 
 
 class TripadvisorSpiderMiddleware(object):
