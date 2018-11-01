@@ -2,7 +2,7 @@ import configparser
 from Tripadvisor.data import datatools
 config = configparser.ConfigParser()
 config.read('conf/spider.cfg', encoding='utf-8')
-section = config['yuyan']
+section = config['disneyland']
 # section['language'] = 'en'
 # section['page_num'] = '1'
 is_toexcel = True

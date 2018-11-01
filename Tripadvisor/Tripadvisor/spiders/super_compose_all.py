@@ -102,8 +102,11 @@ class ZhujiajiaoSpider(scrapy.Spider):
 
     def create_selenium_chrome(self, url):
         chrome_options = Options()
+        if self.language == 'en':
+            chrome_options.add_argument('--lang=en')
         chrome_options.add_argument('--headless')  # 不打开chrome GUI的情况在Chrome下执行我们的Selenium脚本。
         chrome_options.add_argument('--disable-gpu')
+
         driver = webdriver.Chrome(chrome_options=chrome_options)
         wait = WebDriverWait(driver, 10)
         print('-----创建浏览器和等待成功')
@@ -143,6 +146,7 @@ class ZhujiajiaoSpider(scrapy.Spider):
             wait.until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, '.partial_entry')))
             time.sleep(1)
         except Exception as e:
+            print('出错了==')
             raise e
 
 
