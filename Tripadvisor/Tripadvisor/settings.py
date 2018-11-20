@@ -11,7 +11,6 @@
 # 默认基本配置
 import os
 
-from Tripadvisor.start import section
 
 BOT_NAME = 'Tripadvisor'
 SPIDER_MODULES = ['Tripadvisor.spiders']
@@ -30,7 +29,7 @@ ROBOTSTXT_OBEY = False
 # pipeline的权重越小优先级越高, 优先下载，在进行媒体爬取
 ITEM_PIPELINES = {
     'Tripadvisor.pipelines.TripadvisorPipeline': 302,
-    'Tripadvisor.pipelines.TripadvisorImagePipeline': 301,
+    'Tripadvisor.pipelines.TripadvisorImagePipeline': 300,
     # 'scrapy_redis.pipelines.RedisPipeline': 400,
 }
 
@@ -51,9 +50,9 @@ DOWNLOAD_DELAY = 2
 #     'small':(50,50),
 #     'big':(270,270),
 # }
-IMAGES_STORE = os.path.join(os.path.dirname(os.path.realpath('__file__')),
-                            'images_{}'.format(section.get('verbose_name')))
+BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+IMAGES_STORE = os.path.join(BASE_DIR, 'images')
 CONCURRENT_REQUESTS = 32
 
 if __name__ == '__main__':
-    print(IMAGES_STORE)
+    print(BASE_DIR)

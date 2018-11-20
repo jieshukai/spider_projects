@@ -138,4 +138,4 @@ class ZhujiajiaoSpider(scrapy.Spider):
 if __name__ == '__main__':
     from scrapy import cmdline
 
-    cmdline.execute('scrapy crawl waitan_1'.split())
+    cmdline.execute('scrapy crawl waitan_1 -O '.split())

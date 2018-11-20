@@ -153,4 +153,4 @@ class ZhujiajiaoSpider(scrapy.Spider):
 if __name__ == '__main__':
     from scrapy import cmdline
 
-    cmdline.execute('scrapy crawl super_compose_all'.split())
+    cmdline.execute('scrapy crawl super_compose_all -o super.csv'.split())

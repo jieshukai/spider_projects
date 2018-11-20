@@ -52,6 +52,14 @@ parser.read_dict(
             'page_num': 1,
 
         },
+        'Mingzhu_Shanghai': {
+            'name': 'Mingzhu_Shanghai',
+            'verbose_name': '东方明珠',
+            'language': 'zhCN',
+            'start_url': 'https://www.tripadvisor.cn/Attraction_Review-g308272-d311602-Reviews-Oriental_Pearl_Tower_Dongfang_Mingzhu-Shanghai.html',
+            'page_num': 1,
+
+        },
 
     })
 if __name__ == '__main__':

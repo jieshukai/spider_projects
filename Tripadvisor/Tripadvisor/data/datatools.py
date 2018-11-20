@@ -3,7 +3,6 @@ import xlrd as xlrd
 
 
 # 获取数据
-from Tripadvisor.start import section
 
 
 def to_excel(from_path, to_path, sheet_name):
@@ -18,6 +17,8 @@ def to_excel(from_path, to_path, sheet_name):
     writer.save()
 
 def main():
+    from Tripadvisor.start import section
+
     name = section.get('name')
 
     ch_path = './data/json/{}_zhCN.json'.format(name)
